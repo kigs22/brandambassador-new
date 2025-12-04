@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: brandambassador-backend
+    env: node
+    region: frankfurt
+    plan: free
+    buildCommand: "npm install"
+    startCommand: "npm run dev"
+    envVars:
+      - key: PORT
+        value: "5000"
+      - key: NODE_ENV
+        value: "production"
+    healthCheckPath: /
