@@ -1,25 +1,15 @@
-// server/server.js
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const mpesaRoutes = require('./routes/mpesaRoutes'); // ← Add this
+// Validate critical env vars
+const requiredEnvVars = [
+  'MPESA_CONSUMER_KEY',usPWIH1KOOgmblFL39lIeeJ37AmZJKw0kD3nVv0mXu1FxsF3
+  'MPESA_CONSUMER_SECRET',8IW5V2TQkgO4NghN3ocXGg9ZNvUazmIKCjO4XbFPRribwn2P79ltSyGBzuz161SC
+  'MPESA_SHORTCODE',174379
+  'MPESA_PASSKEY',bfb279f97bd94dd5b667ea7b5c212434d8918660b8a7d5b430a7d5b430a7d5b4
+  'MPESA_CALLBACK_URL'https://brandambassador-backend-wjvx.onrender.com/api/mpesa/callback
+];
 
-dotenv.config();
-
-const app = express();
-const PORT = process.env.PORT || 5000;
-
-app.use(cors());
-app.use(express.json());
-
-// Health check route
-app.get('/', (req, res) => {
-  res.json({ message: '✅ BrandAmbassador Backend is LIVE!' });
-});
-
-// M-Pesa routes
-app.use('/api/mpesa', mpesaRoutes); // ← Register M-Pesa routes
-
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+for (const key of requiredEnvVars) {
+  if (!process.env[key]) {
+    console.error(`❌ Missing required environment variable: ${key}`);
+    process.exit(1);
+  }
+}
